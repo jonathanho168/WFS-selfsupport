@@ -4,21 +4,16 @@ using WFSPortal.Models;
 
 namespace WFSPortal.Controllers;
 
-public class HomeController : Controller
+public class PayrollController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly ILogger<PayrollController> _logger;
 
-    public HomeController(ILogger<HomeController> logger)
+    public PayrollController(ILogger<PayrollController> logger)
     {
         _logger = logger;
     }
 
     public IActionResult Index()
-    {
-        return View();
-    }
-
-    public IActionResult About()
     {
         return View();
     }
