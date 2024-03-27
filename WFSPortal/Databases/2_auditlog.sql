@@ -1,4 +1,4 @@
-CREATE TABLE AuditLog
+CREATE TABLE dbo.AuditLog
 (
     AuditID BIGINT IDENTITY(1,1) PRIMARY KEY,
     ObjectName NVARCHAR(255) NOT NULL, -- The name of the object (e.g. Active Directory) where the change occurred
