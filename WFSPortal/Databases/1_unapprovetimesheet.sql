@@ -29,5 +29,9 @@ BEGIN
 	   SET SubmittedFlag = 0, ApprovedFlag = 0
 	 WHERE PersonTimeGroupPeriodGUID = @TimeSheetGUID
 
+	INSERT INTO AuditLog (ObjectName, RecordID, ChangedBy, ChangeTime, System, Module, Description)
+    VALUES ('Epicor HCM', CAST(@TimeSheetGUID AS NVARCHAR(1000)), @ManagerUsername, GETDATE(), 'Self Support', 'UnapproveTimesheet', 'Timesheet unapproved by manager.')
+
+
 END
 
