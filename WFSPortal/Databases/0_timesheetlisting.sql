@@ -24,7 +24,16 @@ BEGIN
 
 	-- forthekids\ = 12
 
-	SELECT PTGP.PersonTimeGroupPeriodGUID
+	SELECT PTGP.PersonTimeGroupPeriodGUID,
+		   p.FullName,
+		   p.EmployeeID,
+		   ptgp.PositionCode,
+		   ptgp.RoutingInstanceGUID,
+		   tgp.TimeGroupPeriodStartDate,
+		   tgp.TimeGroupPeriodEndDate,
+		   was.SupervisorFullName,
+		   was.SupervisorPersonGUID,
+		   man.UserName as SupervisorUsername
 	  FROM tPersonTimeGroupPeriod ptgp with (nolock)
 	  JOIN tTimeGroupPeriod tgp with (nolock) on ptgp.TimeGroupPeriodGUID = tgp.TimeGroupPeriodGUID
 	  JOIN tperson p with (nolock) on ptgp.PersonGUID = p.PersonGUID
@@ -33,6 +42,7 @@ BEGIN
 	 WHERE ptgp.SubmittedFlag = 1 and ptgp.ApprovedFlag = 1
 	   AND tgp.ClosedFlag = 0
 	   AND man.username = @ManagerUsername
+
 
 END
 
