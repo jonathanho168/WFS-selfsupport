@@ -1,3 +1,9 @@
+USE [EpicorHCMCMU2024]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
 CREATE TABLE dbo.AuditLog
 (
     AuditID BIGINT IDENTITY(1,1) PRIMARY KEY,
@@ -7,5 +13,5 @@ CREATE TABLE dbo.AuditLog
     ChangeTime DATETIME NOT NULL, -- The timestamp when the change was made
     System NVARCHAR(255) NOT NULL, -- The service (e.g. SelfSupport) that made the change
     Module NVARCHAR(255) NOT NULL, -- The module that executed the change (e.g. timesheet unapproval)
-    Description NVARCHAR(1000) NOT NULL, -- Brief description of who made what change
+    Description NVARCHAR(1000) NOT NULL -- Brief description of who made what change
 );
