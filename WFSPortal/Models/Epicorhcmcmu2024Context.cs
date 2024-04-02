@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Data;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
+using Microsoft.Data.SqlClient;
 
 namespace WFSPortal.Models;
 
