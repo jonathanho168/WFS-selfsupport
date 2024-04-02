@@ -10633,15 +10633,21 @@ public partial class Epicorhcmcmu2024Context : DbContext
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
-    public async Task<List<TimeSheetListing>> GetTimeSheetListingsAsync()
+    public async Task<List<TimeSheetListing>> GetTimeSheetListingsAsync(string managerUsername)
     {
-        // Assuming your stored procedure is named 'GetTimeSheetListings' and doesn't require any parameters.
+        // Define the SQL command, including the parameter placeholder
+        var sql = "EXEC dbo.WFS_Manager_TimeSheetListing @ManagerUsername";
+
+        // Create a SQL parameter for the method parameter `managerUsername`
+        var managerUsernameParam = new SqlParameter("@ManagerUsername", managerUsername);
+
         var timeSheetListings = await Set<TimeSheetListing>()
-            .FromSqlRaw("EXEC dbo.WFS_Manager_TimeSheetListing")
+            .FromSqlRaw(sql, managerUsernameParam)
             .ToListAsync();
 
         return timeSheetListings;
     }
+
 
 
 }
