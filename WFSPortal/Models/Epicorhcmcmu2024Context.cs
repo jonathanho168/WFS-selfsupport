@@ -2038,10 +2038,6 @@ public partial class Epicorhcmcmu2024Context : DbContext
 
     public virtual DbSet<Zschooldistrict> Zschooldistricts { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=epicorhcm-dev.wfspa.local;Database=epicorhcmcmu2024;User Id=CMU2024;Password=Wesley_CMU_2024!;TrustServerCertificate=True");
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<DcConfigLinkTable>(entity =>
