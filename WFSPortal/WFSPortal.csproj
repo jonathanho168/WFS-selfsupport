@@ -8,17 +8,23 @@
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
+
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.17">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.8" />
+    <!-- Add Microsoft.Identity.Web package for Azure AD integration -->
+    <PackageReference Include="Microsoft.Identity.Web" Version="1.24.0" />
   </ItemGroup>
+
   <ItemGroup>
     <None Remove="Views\Payroll\" />
   </ItemGroup>
+
   <ItemGroup>
     <Folder Include="Views\Payroll\" />
   </ItemGroup>
+
 </Project>
