@@ -1,0 +1,38 @@
+﻿@model List<TimeSheetListing>
+
+@{
+    ViewData["Title"] = "Time Sheet Listings";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Time Sheet Listings</h1>
+    <p>View your managed time sheets here.</p>
+</div>
+
+<table class="table table-striped table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>Full Name</th>
+            <th>Employee ID</th>
+            <th>Position Code</th>
+            <th>Time Group Period Start Date</th>
+            <th>Time Group Period End Date</th>
+            <th>Supervisor Full Name</th>
+            <!-- Add other headers as needed -->
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.FullName</td>
+                <td>@item.EmployeeID</td>
+                <td>@item.PositionCode</td>
+                <td>@item.TimeGroupPeriodStartDate.ToShortDateString()</td>
+                <td>@item.TimeGroupPeriodEndDate.ToShortDateString()</td>
+                <td>@item.SupervisorFullName</td>
+                <!-- Add other data columns as needed -->
+            </tr>
+        }
+    </tbody>
+</table>
