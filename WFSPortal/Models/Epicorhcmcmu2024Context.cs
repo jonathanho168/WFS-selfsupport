@@ -10635,45 +10635,11 @@ public partial class Epicorhcmcmu2024Context : DbContext
 
     public async Task<List<TimeSheetListing>> GetTimeSheetListingsAsync()
     {
-        var timeSheetListings = new List<TimeSheetListing>();
+        // Assuming your stored procedure is named 'GetTimeSheetListings' and doesn't require any parameters.
+        var timeSheetListings = await Set<TimeSheetListing>()
+            .FromSqlRaw("EXEC dbo.WFS_Manager_TimeSheetListing")
+            .ToListAsync();
 
-        // Open a connection to the database
-        var connection = Database.GetDbConnection();
-        await connection.OpenAsync();
-
-        using (var command = connection.CreateCommand())
-        {
-            // Specify the name of the stored procedure
-            command.CommandText = "dbo.WFS_Manager_TimeSheetListing";
-            command.CommandType = CommandType.StoredProcedure;
-
-            // If your stored procedure takes parameters, add them like this:
-            // command.Parameters.Add(new SqlParameter("@ParamName", paramValue));
-
-            using (var reader = await command.ExecuteReaderAsync())
-            {
-                while (await reader.ReadAsync())
-                {
-                    // Create a new TimeSheetListing object for each record
-                    var listing = new TimeSheetListing
-                    {
-                        PersonTimeGroupPeriodGUID = reader.GetGuid(reader.GetOrdinal("PersonTimeGroupPeriodGUID")),
-                        FullName = reader.GetString(reader.GetOrdinal("FullName")),
-                        EmployeeID = reader.GetString(reader.GetOrdinal("EmployeeID")),
-                        PositionCode = reader.GetString(reader.GetOrdinal("PositionCode")),
-                        RoutingInstanceGUID = reader.GetGuid(reader.GetOrdinal("RoutingInstanceGUID")),
-                        TimeGroupPeriodStartDate = reader.GetDateTime(reader.GetOrdinal("TimeGroupPeriodStartDate")),
-                        TimeGroupPeriodEndDate = reader.GetDateTime(reader.GetOrdinal("TimeGroupPeriodEndDate")),
-                        SupervisorFullName = reader.GetString(reader.GetOrdinal("SupervisorFullName")),
-                        SupervisorPersonGUID = reader.GetGuid(reader.GetOrdinal("SupervisorPersonGUID")),
-                        SupervisorUsername = reader.GetString(reader.GetOrdinal("SupervisorUsername")),
-                    };
-                    timeSheetListings.Add(listing);
-                }
-            }
-        }
-
-        await connection.CloseAsync();
         return timeSheetListings;
     }
 
