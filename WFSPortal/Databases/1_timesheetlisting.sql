@@ -24,6 +24,9 @@ BEGIN
 
 	-- forthekids\ = 12
 
+
+	SET @ManagerUsername = 'wfspa\' + @ManagerUsername
+
 	SELECT PTGP.PersonTimeGroupPeriodGUID,
 		   p.FullName,
 		   p.EmployeeID,
