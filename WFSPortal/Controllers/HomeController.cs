@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WFSPortal.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WFSPortal.Controllers;
 
@@ -11,6 +13,12 @@ public class HomeController : Controller
     public HomeController(ILogger<HomeController> logger)
     {
         _logger = logger;
+    }
+
+    [Authorize("WFS_Admins")]
+    public IActionResult Admin()
+    {
+        return View();
     }
 
     public IActionResult Index()
