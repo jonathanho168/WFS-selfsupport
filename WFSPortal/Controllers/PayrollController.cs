@@ -5,7 +5,7 @@ using WFSPortal.Models;
 
 namespace WFSPortal.Controllers
 {
-    [Authorize] // Ensure only authorized (signed-in) users can access this controller
+    // [Authorize] // Ensure only authorized (signed-in) users can access this controller
     public class PayrollController : Controller
     {
         private readonly Epicorhcmcmu2024Context _context;
