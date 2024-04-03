@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
-using WFSPortal.Data;
 using WFSPortal.Models;
 
 namespace WFSPortal.Controllers
