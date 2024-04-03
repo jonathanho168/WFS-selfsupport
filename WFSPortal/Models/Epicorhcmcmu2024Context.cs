@@ -10635,17 +10635,30 @@ public partial class Epicorhcmcmu2024Context : DbContext
 
     public async Task<List<TimeSheetListing>> GetTimeSheetListingsAsync(string managerUsername)
     {
-        // Define the SQL command, including the parameter placeholder
-        var sql = "EXEC dbo.WFS_Manager_TimeSheetListing @ManagerUsername";
+        List<TimeSheetListing> listings = new List<TimeSheetListing>();
 
-        // Create a SQL parameter for the method parameter `managerUsername`
-        var managerUsernameParam = new SqlParameter("@ManagerUsername", managerUsername);
+        using (var command = Database.GetDbConnection().CreateCommand())
+        {
+            command.CommandText = "EXEC dbo.WFS_Manager_TimeSheetListing @ManagerUsername";
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add(new SqlParameter("@ManagerUsername", managerUsername));
 
-        var timeSheetListings = await Set<TimeSheetListing>()
-            .FromSqlRaw(sql, managerUsernameParam)
-            .ToListAsync();
+            Database.OpenConnection();
 
-        return timeSheetListings;
+            using (var result = await command.ExecuteReaderAsync())
+            {
+                while (await result.ReadAsync())
+                {
+                    var listing = new TimeSheetListing
+                    {
+                        // Map properties from result to TimeSheetListing
+                    };
+                    listings.Add(listing);
+                }
+            }
+        }
+
+        return listings;
     }
 
 
