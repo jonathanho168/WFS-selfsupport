@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WFSPortal.Models;
 
@@ -10648,6 +10649,17 @@ public partial class Epicorhcmcmu2024Context : DbContext
         return timeSheetListings;
     }
 
+    public async Task UnapproveTimesheetAsync(string managerUsername, Guid timesheetGUID)
+    {
+        // Define the SQL command with parameter placeholders
+        var sql = "EXEC dbo.WFS_Manager_UnapproveTimesheet @ManagerUsername, @TimeSheetGUID";
 
+        // Create SqlParameter objects for the parameters
+        var managerUsernameParam = new SqlParameter("@ManagerUsername", managerUsername);
+        var timesheetGUIDParam = new SqlParameter("@TimeSheetGUID", timesheetGUID);
+
+        // Execute the SQL command asynchronously
+        await Database.ExecuteSqlRawAsync(sql, managerUsernameParam, timesheetGUIDParam);
+    }
 
 }

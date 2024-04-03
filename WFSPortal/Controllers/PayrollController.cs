@@ -27,5 +27,16 @@ namespace WFSPortal.Controllers
             // Pass the listings to the view
             return View("~/Views/Payroll/Index.cshtml", listings);
         }
+
+        public async Task<IActionResult> UnapproveTimesheet(Guid timesheetGUID)
+        {
+            var managerUsername = User.Identity.Name;
+
+            // Call the UnapproveTimesheetAsync method on the context
+            await _context.UnapproveTimesheetAsync(managerUsername, timesheetGUID);
+
+            // Redirect to the index action method upon successful unapproval
+            return RedirectToAction("Index");
+        }
     }
 }
