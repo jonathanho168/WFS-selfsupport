@@ -1,27 +1,31 @@
-﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using System.Threading.Tasks;
+using WFSPortal.Data;
 using WFSPortal.Models;
 
-namespace WFSPortal.Controllers;
-
-public class PayrollController : Controller
+namespace WFSPortal.Controllers
 {
-    private readonly ILogger<PayrollController> _logger;
-
-    public PayrollController(ILogger<PayrollController> logger)
+    [Authorize] // Ensure only authorized (signed-in) users can access this controller
+    public class PayrollController : Controller
     {
-        _logger = logger;
-    }
+        private readonly Epicorhcmcmu2024Context _context;
 
-    public IActionResult Index()
-    {
-        return View();
-    }
+        public PayrollController(Epicorhcmcmu2024Context context)
+        {
+            _context = context;
+        }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        public async Task<IActionResult> Index()
+        {
+            // Assuming the manager's username is stored as the user's name
+            var managerUsername = User.Identity.Name;
+
+            // Retrieve time sheet listings for the signed-in manager
+            var listings = await _context.GetTimeSheetListingsAsync(managerUsername);
+
+            // Pass the listings to the view
+            return View("~/Views/Payroll/Index.cshtml", listings);
+        }
     }
 }
-
