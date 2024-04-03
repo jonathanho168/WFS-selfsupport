@@ -17,14 +17,22 @@ namespace WFSPortal.Controllers
 
         public async Task<IActionResult> Index()
         {
-            // Assuming the manager's username is stored as the user's name
-            var managerUsername = User.Identity.Name;
+            // Check if the user is authenticated and the username is not null
+            if (User?.Identity?.IsAuthenticated == true && User.Identity.Name != null)
+            {
+                // Assuming the manager's username is stored as the user's name
+                var managerUsername = User.Identity.Name;
 
-            // Retrieve time sheet listings for the signed-in manager
-            var listings = await _context.GetTimeSheetListingsAsync(managerUsername);
+                // Retrieve time sheet listings for the signed-in manager
+                var listings = await _context.GetTimeSheetListingsAsync(managerUsername);
 
-            // Pass the listings to the view
-            return View("~/Views/Payroll/Index.cshtml", listings);
+                // Pass the listings to the view
+                return View("~/Views/Payroll/Index.cshtml", listings);
+            }
+            else
+            {
+                // Handle the case where the user is not authenticated or the username is null
+            }
         }
     }
 }
