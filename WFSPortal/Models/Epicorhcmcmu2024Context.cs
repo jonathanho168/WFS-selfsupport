@@ -10639,7 +10639,7 @@ public partial class Epicorhcmcmu2024Context : DbContext
 
         using (var command = Database.GetDbConnection().CreateCommand())
         {
-            command.CommandText = "EXEC dbo.WFS_Manager_TimeSheetListing @ManagerUsername";
+            command.CommandText = "WFS_Manager_TimeSheetListing";
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.Add(new SqlParameter("@ManagerUsername", managerUsername));
 
