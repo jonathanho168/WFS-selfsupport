@@ -10635,17 +10635,40 @@ public partial class Epicorhcmcmu2024Context : DbContext
 
     public async Task<List<TimeSheetListing>> GetTimeSheetListingsAsync(string managerUsername)
     {
-        // Define the SQL command, including the parameter placeholder
-        var sql = "EXEC dbo.WFS_Manager_TimeSheetListing @ManagerUsername";
+        List<TimeSheetListing> listings = new List<TimeSheetListing>();
 
-        // Create a SQL parameter for the method parameter `managerUsername`
-        var managerUsernameParam = new SqlParameter("@ManagerUsername", managerUsername);
+        using (var command = Database.GetDbConnection().CreateCommand())
+        {
+            command.CommandText = "WFS_Manager_TimeSheetListing";
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add(new SqlParameter("@ManagerUsername", managerUsername));
 
-        var timeSheetListings = await Set<TimeSheetListing>()
-            .FromSqlRaw(sql, managerUsernameParam)
-            .ToListAsync();
+            Database.OpenConnection();
 
-        return timeSheetListings;
+            using (var result = await command.ExecuteReaderAsync())
+            {
+                while (await result.ReadAsync())
+                {
+                    var listing = new TimeSheetListing
+                    {
+                        // Map properties from result to TimeSheetListing
+                        PersonTimeGroupPeriodGUID = result.GetGuid(result.GetOrdinal("PersonTimeGroupPeriodGUID")),
+                        FullName = result.IsDBNull(result.GetOrdinal("FullName")) ? null : result.GetString(result.GetOrdinal("FullName")),
+                        EmployeeID = result.IsDBNull(result.GetOrdinal("EmployeeID")) ? null : result.GetString(result.GetOrdinal("EmployeeID")),
+                        PositionCode = result.IsDBNull(result.GetOrdinal("PositionCode")) ? null : result.GetString(result.GetOrdinal("PositionCode")),
+                        RoutingInstanceGUID = result.GetGuid(result.GetOrdinal("RoutingInstanceGUID")),
+                        TimeGroupPeriodStartDate = result.GetDateTime(result.GetOrdinal("TimeGroupPeriodStartDate")),
+                        TimeGroupPeriodEndDate = result.GetDateTime(result.GetOrdinal("TimeGroupPeriodEndDate")),
+                        SupervisorFullName = result.IsDBNull(result.GetOrdinal("SupervisorFullName")) ? null : result.GetString(result.GetOrdinal("SupervisorFullName")),
+                        SupervisorPersonGUID = result.GetGuid(result.GetOrdinal("SupervisorPersonGUID")),
+                        SupervisorUsername = result.IsDBNull(result.GetOrdinal("SupervisorUsername")) ? null : result.GetString(result.GetOrdinal("SupervisorUsername"))
+                    };
+                    listings.Add(listing);
+                }
+            }
+        }
+
+        return listings;
     }
 
 
