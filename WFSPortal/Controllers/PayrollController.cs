@@ -20,8 +20,11 @@ namespace WFSPortal.Controllers
         {
             // Assuming the manager's username is stored as the user's name
             var managerUsername = User.Identity.Name;
+            var temp = User.Identity.Name ?? "jonathan";
             System.Diagnostics.Debug.WriteLine("DJKLFJDALKFJDALFJADKFJLDAF");
-            System.Diagnostics.Debug.WriteLine(User?.Identity.Name);
+            System.Diagnostics.Debug.WriteLine(User.Identity.Name);
+            System.Diagnostics.Debug.WriteLine(User.Identity);
+            System.Diagnostics.Debug.WriteLine(temp);
             System.Diagnostics.Debug.WriteLine("AJDKFLJADKLFDAF");
 
             var jho = "jho";
