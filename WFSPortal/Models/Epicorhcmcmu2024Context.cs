@@ -10652,6 +10652,16 @@ public partial class Epicorhcmcmu2024Context : DbContext
                     var listing = new TimeSheetListing
                     {
                         // Map properties from result to TimeSheetListing
+                        PersonTimeGroupPeriodGUID = result.GetGuid(result.GetOrdinal("PersonTimeGroupPeriodGUID")),
+                        FullName = result.IsDBNull(result.GetOrdinal("FullName")) ? null : result.GetString(result.GetOrdinal("FullName")),
+                        EmployeeID = result.IsDBNull(result.GetOrdinal("EmployeeID")) ? null : result.GetString(result.GetOrdinal("EmployeeID")),
+                        PositionCode = result.IsDBNull(result.GetOrdinal("PositionCode")) ? null : result.GetString(result.GetOrdinal("PositionCode")),
+                        RoutingInstanceGUID = result.GetGuid(result.GetOrdinal("RoutingInstanceGUID")),
+                        TimeGroupPeriodStartDate = result.GetDateTime(result.GetOrdinal("TimeGroupPeriodStartDate")),
+                        TimeGroupPeriodEndDate = result.GetDateTime(result.GetOrdinal("TimeGroupPeriodEndDate")),
+                        SupervisorFullName = result.IsDBNull(result.GetOrdinal("SupervisorFullName")) ? null : result.GetString(result.GetOrdinal("SupervisorFullName")),
+                        SupervisorPersonGUID = result.GetGuid(result.GetOrdinal("SupervisorPersonGUID")),
+                        SupervisorUsername = result.IsDBNull(result.GetOrdinal("SupervisorUsername")) ? null : result.GetString(result.GetOrdinal("SupervisorUsername"))
                     };
                     listings.Add(listing);
                 }
