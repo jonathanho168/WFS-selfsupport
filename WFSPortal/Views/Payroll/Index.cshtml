@@ -31,7 +31,9 @@
                 <td>@item.TimeGroupPeriodStartDate.ToShortDateString()</td>
                 <td>@item.TimeGroupPeriodEndDate.ToShortDateString()</td>
                 <td>@item.SupervisorFullName</td>
-                <!-- Add other data columns as needed -->
+                <form method="post" asp-action="UnapproveTimesheet" asp-route-timesheetGUID="@item.TimeSheetListingGUID">
+                    <button type="submit" class="btn btn-primary">Unapprove</button>
+                </form>
             </tr>
         }
     </tbody>

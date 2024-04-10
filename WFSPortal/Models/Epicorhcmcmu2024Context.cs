@@ -10633,6 +10633,7 @@ public partial class Epicorhcmcmu2024Context : DbContext
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
+
     public async Task<List<TimeSheetListing>> GetTimeSheetListingsAsync(string managerUsername)
     {
         List<TimeSheetListing> listings = new List<TimeSheetListing>();
@@ -10672,5 +10673,21 @@ public partial class Epicorhcmcmu2024Context : DbContext
     }
 
 
+    public async Task UnapproveTimeSheetAsync(Guid timeSheetGuid, string managerUsername)
+    {
+        using (var command = Database.GetDbConnection().CreateCommand())
+        {
+            command.CommandText = "WFS_Manager_UnapproveTimesheet";
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add(new SqlParameter("@TimeSheetGUID", timeSheetGuid));
+            command.Parameters.Add(new SqlParameter("@ManagerUsername", managerUsername));
+
+            Database.OpenConnection();
+
+            await command.ExecuteNonQueryAsync();
+
+        }
+
+    }
 
 }
