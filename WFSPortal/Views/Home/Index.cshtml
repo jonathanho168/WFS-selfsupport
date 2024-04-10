@@ -1,9 +1,41 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <div class="row">
+        <div class="col text-center">
+            @if ((await AuthorizationService.AuthorizeAsync(User, "WFS_Admins")).Succeeded)
+            {
+                <p>[@UserName, Admin]</p>
+            }
+            else if ((await AuthorizationService.AuthorizeAsync(User, "WFS_Managers")).Succeeded)
+            {
+                <p>[@UserName, Manager]</p>
+            }
+            else if ((await AuthorizationService.AuthorizeAsync(User, "WFS_Users")).Succeeded)
+            {
+                <p>[@UserName, User]</p>
+            }
+            else
+            {
+                <p>[Anonymous]</p>
+            }
+        </div>
+    </div>
+    <div align="center">
+        <a class="btn wfs-green" asp-controller="Clients" asp-action="Create">
+            Create a Client
+        </a>
+        @if ((await AuthorizationService.AuthorizeAsync(User, "WFS_Managers")).Succeeded)
+        {
+            <a class="btn wfs-green ml-4" asp-controller="Home" asp-action="Admin">
+                View/Edit Dropdown Content
+            </a>
+        }
+    </div>
 </div>
-
