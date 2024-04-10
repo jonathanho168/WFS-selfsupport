@@ -40,10 +40,10 @@ namespace WFSPortal.Controllers
         public async Task<IActionResult> UnapproveTimesheet(Guid timesheetId)
         {
             // Assuming the manager's username is stored as the user's name
-            var managerUsername = User.Identity.Name;
+            var managerUsername = "jho";
 
             // Call UnapproveTimeSheetAsync method from _context using managerUsername and timesheetId
-            await _context.UnapproveTimeSheetAsync(managerUsername, timesheetId);
+            await _context.UnapproveTimeSheetAsync(timesheetId, managerUsername);
 
             // Redirect to the Index action after unapproving the timesheet
             return RedirectToAction("Index");
