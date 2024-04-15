@@ -19,31 +19,23 @@ namespace WFSPortal.Controllers
         public async Task<IActionResult> Index()
         {
             // Assuming the manager's username is stored as the user's name
-            var managerUsername = User.Identity.Name;
-            var temp = User.Identity.Name ?? "jonathan";
-            System.Diagnostics.Debug.WriteLine("DJKLFJDALKFJDALFJADKFJLDAF");
-            System.Diagnostics.Debug.WriteLine(User.Identity.Name);
-            System.Diagnostics.Debug.WriteLine(User.Identity);
-            System.Diagnostics.Debug.WriteLine(temp);
-            System.Diagnostics.Debug.WriteLine("AJDKFLJADKLFDAF");
-
-            var jho = "jho";
+            var managerUsername = User.Identity.Name ?? "WFS_ANON";
 
             // Retrieve time sheet listings for the signed-in manager
-            var listings = await _context.GetTimeSheetListingsAsync(temp);
+            var listings = await _context.GetTimeSheetListingsAsync(managerUsername);
             
             // Pass the listings to the view
             return View("~/Views/Payroll/Index.cshtml", listings);
         }
 
         [HttpPost]
-        public async Task<IActionResult> UnapproveTimesheet(Guid timesheetId)
+        public async Task<IActionResult> UnapproveTimesheet(Guid timesheetGUID)
         {
             // Assuming the manager's username is stored as the user's name
             var managerUsername = User.Identity.Name ?? "WFS_ANON";
 
             // Call UnapproveTimeSheetAsync method from _context using managerUsername and timesheetId
-            await _context.UnapproveTimeSheetAsync(timesheetId, managerUsername);
+            await _context.UnapproveTimeSheetAsync(timesheetGUID, managerUsername);
 
             // Redirect to the Index action after unapproving the timesheet
             return RedirectToAction("Index");
