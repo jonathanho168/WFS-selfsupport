@@ -1,9 +1,29 @@
-﻿@{
+﻿@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment hostEnv
+@using Microsoft.AspNetCore.Hosting
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+
+@{
     ViewData["Title"] = "Home Page";
+    string UserName = Context.User?.Identity.Name ?? "anonymous";
+    UserName = UserName.Split('\\').Last();
+    UserName = UserName.Split('@').First();
+    ViewData["UserName"] = UserName;
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>My Username is: @UserName</p>
+
+    @if ((await AuthorizationService.AuthorizeAsync(User, "WFS_Timesheet")).Succeeded)
+    {
+        <p>[@UserName, TimeSheet Access]</p>
+    }
+    else
+    {
+        <p>[No Group Access]</p>
+    }
+
 </div>
 

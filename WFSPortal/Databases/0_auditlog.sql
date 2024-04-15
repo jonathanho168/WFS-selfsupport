@@ -1,17 +1,27 @@
 USE [EpicorHCMCMU2024]
 GO
+
+/****** Object:  Table [dbo].[WFS_AuditLog]    Script Date: 4/12/2024 2:30:36 PM ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE dbo.AuditLog
+
+CREATE TABLE [dbo].[WFS_AuditLog](
+	[AuditID] [bigint] IDENTITY(1,1) NOT NULL,
+	[ObjectName] [nvarchar](255) NOT NULL,
+	[RecordID] [nvarchar](1000) NOT NULL,
+	[ChangedBy] [nvarchar](255) NOT NULL,
+	[ChangeTime] [datetime] NOT NULL,
+	[System] [nvarchar](255) NOT NULL,
+	[Module] [nvarchar](255) NOT NULL,
+	[Description] [nvarchar](1000) NOT NULL,
+PRIMARY KEY CLUSTERED 
 (
-    AuditID BIGINT IDENTITY(1,1) PRIMARY KEY,
-    ObjectName NVARCHAR(255) NOT NULL, -- The name of the object (e.g. Active Directory) where the change occurred
-    RecordID NVARCHAR(1000) NOT NULL, -- A unique identifier of the record that was changed, such as a GUID
-    ChangedBy NVARCHAR(255) NOT NULL, -- The username or identifier of the person who made the change
-    ChangeTime DATETIME NOT NULL, -- The timestamp when the change was made
-    System NVARCHAR(255) NOT NULL, -- The service (e.g. SelfSupport) that made the change
-    Module NVARCHAR(255) NOT NULL, -- The module that executed the change (e.g. timesheet unapproval)
-    Description NVARCHAR(1000) NOT NULL -- Brief description of who made what change
-);
+	[AuditID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+

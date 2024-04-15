@@ -2,6 +2,10 @@
 
 @{
     ViewData["Title"] = "Time Sheet Listings";
+    string UserName = Context.User?.Identity.Name ?? "anonymous";
+    UserName = UserName.Split('\\').Last();
+    UserName = UserName.Split('@').First();
+    ViewData["UserName"] = UserName;
 }
 
 <div class="text-center">
@@ -18,6 +22,7 @@
             <th>Time Group Period Start Date</th>
             <th>Time Group Period End Date</th>
             <th>Supervisor Full Name</th>
+            <th>Options</th>
             <!-- Add other headers as needed -->
         </tr>
     </thead>
@@ -33,7 +38,7 @@
                 <td>@item.SupervisorFullName</td>
                 <td>
                     <form method="post" asp-action="UnapproveTimesheet"
-                        asp-route-timesheetGUID="@item.PersonTimeGroupPeriodGUID">
+                          asp-route-timesheetId="@item.PersonTimeGroupPeriodGUID" >
                         <button type="submit" class="btn btn-primary">Unapprove</button>
                     </form>
                 </td>
