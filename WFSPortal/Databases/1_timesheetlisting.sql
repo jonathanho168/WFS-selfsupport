@@ -1,6 +1,6 @@
 USE [EpicorHCMCMU2024]
 GO
-/****** Object:  StoredProcedure [dbo].[WFS_Manager_TimeSheetListing]    Script Date: 3/27/2024 4:18:53 PM ******/
+/****** Object:  StoredProcedure [dbo].[WFS_Manager_TimeSheetListing]    Script Date: 4/12/2024 2:08:37 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -24,13 +24,15 @@ BEGIN
 
 	-- forthekids\ = 12
 
-
+	if @ManagerUsername not like 'wfspa\%'
+	begin 
 	SET @ManagerUsername = 'wfspa\' + @ManagerUsername
+	END
 
 	SELECT PTGP.PersonTimeGroupPeriodGUID,
 		   p.FullName,
 		   p.EmployeeID,
-		   ptgp.PositionCode,
+		   ptgp.PositionCode + ' - ' +was.[Position Title] as PositionCode,
 		   ptgp.RoutingInstanceGUID,
 		   tgp.TimeGroupPeriodStartDate,
 		   tgp.TimeGroupPeriodEndDate,

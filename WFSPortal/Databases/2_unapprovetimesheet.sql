@@ -1,6 +1,6 @@
 USE [EpicorHCMCMU2024]
 GO
-/****** Object:  StoredProcedure [dbo].[WFS_Manager_TimeSheetListing]    Script Date: 3/27/2024 6:32:42 PM ******/
+/****** Object:  StoredProcedure [dbo].[WFS_Manager_UnapproveTimesheet]    Script Date: 4/12/2024 2:29:35 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -29,7 +29,7 @@ BEGIN
 	   SET SubmittedFlag = 0, ApprovedFlag = 0
 	 WHERE PersonTimeGroupPeriodGUID = @TimeSheetGUID
 
-	INSERT INTO AuditLog (ObjectName, RecordID, ChangedBy, ChangeTime, System, Module, Description)
+	INSERT INTO WFS_AuditLog (ObjectName, RecordID, ChangedBy, ChangeTime, System, Module, Description)
     VALUES ('Epicor HCM', CAST(@TimeSheetGUID AS NVARCHAR(1000)), @ManagerUsername, GETDATE(), 'Self Support', 'UnapproveTimesheet', 'Timesheet unapproved by manager.')
 
 

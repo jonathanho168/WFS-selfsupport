@@ -30,7 +30,7 @@ namespace WFSPortal.Controllers
             var jho = "jho";
 
             // Retrieve time sheet listings for the signed-in manager
-            var listings = await _context.GetTimeSheetListingsAsync(jho);
+            var listings = await _context.GetTimeSheetListingsAsync(temp);
             
             // Pass the listings to the view
             return View("~/Views/Payroll/Index.cshtml", listings);
@@ -40,7 +40,7 @@ namespace WFSPortal.Controllers
         public async Task<IActionResult> UnapproveTimesheet(Guid timesheetId)
         {
             // Assuming the manager's username is stored as the user's name
-            var managerUsername = "jho";
+            var managerUsername = User.Identity.Name ?? "WFS_ANON";
 
             // Call UnapproveTimeSheetAsync method from _context using managerUsername and timesheetId
             await _context.UnapproveTimeSheetAsync(timesheetId, managerUsername);

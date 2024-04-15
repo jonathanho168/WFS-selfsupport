@@ -1,40 +1,53 @@
-﻿using WFSPortal.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using WFSPortal;
+using WFSPortal.Models;
 
-var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-
-builder.Services.AddAuthentication(Microsoft.AspNetCore.Server.IISIntegration.IISDefaults.AuthenticationScheme);
-
-// Configure DbContext with SQL Server
-builder.Services.AddDbContext<Epicorhcmcmu2024Context>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-builder.Services.AddControllersWithViews();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+namespace WFSPortal
 {
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            CreateHostBuilder(args)
+                .Build()
+                .InitializeDatabase()
+                .Run();
+        }
+
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
+
+    }
+
+    public static class DatabaseExtensions
+    {
+        public static IHost InitializeDatabase(this IHost appHost)
+        {
+            using (var scope = appHost.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                IConfiguration config = services.GetRequiredService<IConfiguration>();
+                IHostEnvironment env = services.GetService<IHostEnvironment>();
+                Epicorhcmcmu2024Context db = services.GetRequiredService <Epicorhcmcmu2024Context> ();
+
+                db.Database.EnsureCreated();
+                db.Database.Migrate();
+            }
+            return appHost;
+        }
+    }
 }
-
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-
-app.UseRouting();
-
-app.UseAuthentication();
-
-app.UseAuthorization();
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
-app.Run();
