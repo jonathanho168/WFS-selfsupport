@@ -12,17 +12,15 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <p>My Username is: @UserName</p>
+    <h1 class="display-4">Welcome, @UserName</h1>
 
     @if ((await AuthorizationService.AuthorizeAsync(User, "WFS_Timesheet")).Succeeded)
     {
-        <p>[@UserName, TimeSheet Access]</p>
+        <p>[Username: @UserName, TimeSheet Access: Yes]</p>
     }
     else
     {
-        <p>[No Group Access]</p>
+        <p>[Group Access: No]</p>
     }
 
 </div>
