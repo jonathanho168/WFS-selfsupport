@@ -4,7 +4,7 @@
 @inject IAuthorizationService AuthorizationService
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home Paggit e";
     string UserName = Context.User?.Identity.Name ?? "anonymous";
     UserName = UserName.Split('\\').Last();
     UserName = UserName.Split('@').First();
