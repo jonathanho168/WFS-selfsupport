@@ -13,7 +13,6 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome, @UserName</h1>
-    <p>For timesheet unapproval, navigate to TimeSheet tab</p>
 
     @if ((await AuthorizationService.AuthorizeAsync(User, "WFS_Timesheet")).Succeeded)
     {
@@ -21,7 +20,7 @@
     }
     else
     {
-        <p>[TimeSheet Access: No]</p>
+        <p>[Group Access: No]</p>
     }
 
 </div>
