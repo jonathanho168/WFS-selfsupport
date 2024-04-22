@@ -25,13 +25,17 @@ As of this writing, this self-service portal allows managers to directly unappro
 ### Installation (Developer Sandbox)
 - Clone the repository
 - Open the solution in Visual Studio
-- Build and run the project
+- Build and run the project, which should connect to the developer sandbox database.
 
 ### Updating for Production
 - Update the connection strings in `WFSPortal/appsettings.json` to point to the production database. Currently, the string in use is called `DefaultConnection`, which points to the developer sandbox database.
 - Navigate to `WFSPortal/Databases`. For each script, update the database name to match the production database name. Currently, the first line in each script reads `USE [EpicorHCMCMU2024]`, which is the developer sandbox database name.
 - Run all three scripts in the production database to create the necessary tables and stored procedures. The order in which these scripts must be run is indicated by the number at the beginning of the file name.
 - Build and run the project to confirm that the application is working as expected.
+- The new database should match the schema of the developer sandbox database. If there are any differences, they should be resolved before deploying the project to IIS.
+- To rescaffold the database, run the following command:
+```dotnet ef dbcontext scaffold "Server=epicorhcm-dev.wfspa.local;Database=epicorhcmcmu2024;User Id=CMU2024;Password=Wesley_CMU_2024!;TrustServerCertificate=True" Microsoft.EntityFrameworkCore.SqlServer -o Models -d```
+- Check to make sure no package dependencies are missing.
 - After this, deploy the project to IIS.
 
 ## Acknowledgements
