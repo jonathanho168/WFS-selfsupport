@@ -10,7 +10,7 @@ GO
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-ALTER PROCEDURE [dbo].[WFS_Manager_UnapproveTimesheet] 
+CREATE PROCEDURE [dbo].[WFS_Manager_UnapproveTimesheet] 
 (
 @TimeSheetGUID uniqueidentifier,
 @ManagerUsername nvarchar(100)
