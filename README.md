@@ -33,3 +33,8 @@ As of this writing, this self-service portal allows managers to directly unappro
 - Run all three scripts in the production database to create the necessary tables and stored procedures. The order in which these scripts must be run is indicated by the number at the beginning of the file name.
 - Build and run the project to confirm that the application is working as expected.
 - After this, deploy the project to IIS.
+
+## Acknowledgements
+
+- Aaron Richards, Director of IT Software
+- CMU students Ritu Chatterjee, Jonathan Ho, and Fa Phanachet for their contributions to the initial development.
