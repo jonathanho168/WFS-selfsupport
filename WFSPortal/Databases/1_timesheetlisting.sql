@@ -10,7 +10,7 @@ GO
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-ALTER PROCEDURE [dbo].[WFS_Manager_TimeSheetListing] 
+CREATE PROCEDURE [dbo].[WFS_Manager_TimeSheetListing] 
 (
 @ManagerUsername nvarchar(100)
 )
