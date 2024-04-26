@@ -33,8 +33,8 @@ As of this writing, this self-service portal allows managers to directly unappro
 - Run all three scripts in the production database to create the necessary tables and stored procedures. The order in which these scripts must be run is indicated by the number at the beginning of the file name.
 - Build and run the project to confirm that the application is working as expected.
 - The new database should match the schema of the developer sandbox database. If there are any differences, they should be resolved before deploying the project to IIS.
-- To rescaffold the database, run the following command:
-```dotnet ef dbcontext scaffold "Server=epicorhcm-dev.wfspa.local;Database=epicorhcmcmu2024;User Id=CMU2024;Password=Wesley_CMU_2024!;TrustServerCertificate=True" Microsoft.EntityFrameworkCore.SqlServer -o Models -d```
+- To rescaffold the database, update the database connection string (potentially adding ```TrustServerCertificate=True```), revise the following command, and run it:
+```dotnet ef dbcontext scaffold "Name=ConnectionStrings:Default Connection" Microsoft.EntityFrameworkCore.SqlServer -o Models -d```
 - Check to make sure no package dependencies are missing.
 - After this, deploy the project to IIS.
 
